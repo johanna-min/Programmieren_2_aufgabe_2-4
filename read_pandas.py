@@ -25,9 +25,11 @@ def read_activity_csv():
     df["time in minutes"] = df["time in seconds"]/60
     return df
 
-#mean_Leistung = df["PowerOriginal"].mean()
-#max_Leistung = df["PowerOriginal"].max()
+def mean_leistung(df):
+    return df["PowerOriginal"].mean()
 
+def max_leistung(df):
+    return df["PowerOriginal"].max()
 
 def make_plot(df):
 
@@ -39,9 +41,11 @@ def make_plot(df):
 def make_power_hr_plot(df):
     fig = px.line(df, x= "time in minutes", y= ["PowerOriginal","HeartRate"])
     return fig
+'''
+def add_zones(df):
+    user_input = input("Bitte geben Sie die maximale Herzfrequenz ein: ") 
+    max_heart_rate = float(user_input)
 
-def add_zones(df, heartRate):
-    max_heart_rate = 200
     df["Zone_1"] = df_activity["HeartRate"] < max_heart_rate * 0.6
     df["Zone_2"] = (df_activity["HeartRate"] < max_heart_rate * 0.6) & (df_activity["HeartRate"] < max_heart_rate * 0.7)
     df["Zone_3"] = (df_activity["HeartRate"] < max_heart_rate * 0.819)
@@ -50,8 +54,10 @@ def add_zones(df, heartRate):
 
     return df
 
+def make_Zone_plot(df):
+    fig = px.line(df,)
 #df_activity[..........].mean()
-
+'''
 if __name__ == "__main__":
     ekg_df = read_my_csv()
     print(ekg_df.head())
