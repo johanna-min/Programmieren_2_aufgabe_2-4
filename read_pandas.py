@@ -1,10 +1,7 @@
-# %%
 
-# Paket für Bearbeitung von Tabellen
 import pandas as pd
 import plotly.express as px
 import numpy as np
-
 
 def read_my_csv():
     # Einlesen eines Dataframes
@@ -14,10 +11,7 @@ def read_my_csv():
 
     # Setzt die Columnnames im Dataframe
     df.columns = ["Messwerte in mV","Zeit in ms"]
-    
-    # Gibt den geladen Dataframe zurück
     return df
-
 
 def read_activity_csv():
     df = pd.read_csv("data/activities/activity.csv", sep=",")
@@ -26,9 +20,11 @@ def read_activity_csv():
     return df
 
 def mean_leistung(df):
+    '''Berechnet und gibt die durchschnittliche Leistung zurück.'''
     return df["PowerOriginal"].mean()
 
 def max_leistung(df):
+    '''Berechnet und gibt die maximale Leistung zurück.'''
     return df["PowerOriginal"].max()
 
 def make_plot(df):
@@ -37,27 +33,39 @@ def make_plot(df):
     fig = px.line(df.head(2000), x= "Zeit in ms", y="Messwerte in mV")
     return fig
 
-
 def make_power_hr_plot(df):
+    '''Erstellung eines Line Plots, der die Leistung und die Herzfrequenz über die Zeit anzeigt.'''
     fig = px.line(df, x= "time in minutes", y= ["PowerOriginal","HeartRate"])
     return fig
-'''
+
 def add_zones(df):
+    '''Die Funktion erstellt eine weitere Spalte, in der die Herzfrequenz in unterschiedliche Kategorien/Zonen eingeteilt wird.'''
     user_input = input("Bitte geben Sie die maximale Herzfrequenz ein: ") 
     max_heart_rate = float(user_input)
 
-    df["Zone_1"] = df_activity["HeartRate"] < max_heart_rate * 0.6
-    df["Zone_2"] = (df_activity["HeartRate"] < max_heart_rate * 0.6) & (df_activity["HeartRate"] < max_heart_rate * 0.7)
-    df["Zone_3"] = (df_activity["HeartRate"] < max_heart_rate * 0.819)
-    df["Zone_4"] = (df_activity["HeartRate"] < max_heart_rate * 0.9)
-    df["Zone_5"] = (df_activity["HeartRate"] < max_heart_rate * 1.0)
+    df.loc[df["HeartRate"] < max_heart_rate * 0.6, "HeartRate_Zone"] = "Zone_1"
+    df.loc[(df["HeartRate"] >= max_heart_rate * 0.6) & (df["HeartRate"] < max_heart_rate * 0.7),"HeartRate_Zone"] = "Zone_2"
+    df.loc[(df["HeartRate"] >= max_heart_rate * 0.7) & (df["HeartRate"] < max_heart_rate * 0.8),"HeartRate_Zone"] = "Zone_3"
+    df.loc[(df["HeartRate"] >= max_heart_rate * 0.8) & (df["HeartRate"] < max_heart_rate * 0.9),"HeartRate_Zone"] = "Zone_4"
+    df.loc[(df["HeartRate"] >= max_heart_rate * 0.9) & (df["HeartRate"] < max_heart_rate * 1.0),"HeartRate_Zone"] = "Zone_5"
 
     return df
+
+
+    df.loc[df["HeartRate"] < max_heart_rate * 0.6, "HeartRate_Zone"] = "Zone_1"
+    
+    df.loc[(df["HeartRate"] >= max_heart_rate * 0.6) & (df["HeartRate"] < max_heart_rate * 0.7), "HeartRate_Zone"] = "Zone_2"
+    df.loc[(df["HeartRate"] >= max_heart_rate * 0.7) & (df["HeartRate"] < max_heart_rate * 0.8), "HeartRate_Zone"] = "Zone_3"
+    df.loc[(df["HeartRate"] >= max_heart_rate * 0.8) & (df["HeartRate"] < max_heart_rate * 0.9), "HeartRate_Zone"] = "Zone_4"
+    
+    df.loc[df["HeartRate"] >= max_heart_rate * 0.9, "HeartRate_Zone"] = "Zone_5"
+    
+
 
 def make_Zone_plot(df):
     fig = px.line(df,)
 #df_activity[..........].mean()
-'''
+
 if __name__ == "__main__":
     ekg_df = read_my_csv()
     print(ekg_df.head())
