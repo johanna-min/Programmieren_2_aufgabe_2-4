@@ -51,17 +51,6 @@ def add_zones(df):
 
     return df
 
-
-    df.loc[df["HeartRate"] < max_heart_rate * 0.6, "HeartRate_Zone"] = "Zone_1"
-    
-    df.loc[(df["HeartRate"] >= max_heart_rate * 0.6) & (df["HeartRate"] < max_heart_rate * 0.7), "HeartRate_Zone"] = "Zone_2"
-    df.loc[(df["HeartRate"] >= max_heart_rate * 0.7) & (df["HeartRate"] < max_heart_rate * 0.8), "HeartRate_Zone"] = "Zone_3"
-    df.loc[(df["HeartRate"] >= max_heart_rate * 0.8) & (df["HeartRate"] < max_heart_rate * 0.9), "HeartRate_Zone"] = "Zone_4"
-    
-    df.loc[df["HeartRate"] >= max_heart_rate * 0.9, "HeartRate_Zone"] = "Zone_5"
-    
-
-
 def make_Zone_plot(df):
     fig = px.line(df,)
 #df_activity[..........].mean()
