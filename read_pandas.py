@@ -28,7 +28,6 @@ def max_leistung(df):
     return df["PowerOriginal"].max()
 
 def make_plot(df):
-
     # Erstellte einen Line Plot, der ersten 2000 Werte mit der Zeit aus der x-Achse
     fig = px.line(df.head(2000), x= "Zeit in ms", y="Messwerte in mV")
     return fig
@@ -38,10 +37,8 @@ def make_power_hr_plot(df):
     fig = px.line(df, x= "time in minutes", y= ["PowerOriginal","HeartRate"])
     return fig
 
-def add_zones(df):
+def add_zones(df, max_heart_rate):
     '''Die Funktion erstellt eine weitere Spalte, in der die Herzfrequenz in unterschiedliche Kategorien/Zonen eingeteilt wird.'''
-    user_input = input("Bitte geben Sie die maximale Herzfrequenz ein: ") 
-    max_heart_rate = float(user_input)
 
     df.loc[df["HeartRate"] < max_heart_rate * 0.6, "HeartRate_Zone"] = "Zone_1"
     df.loc[(df["HeartRate"] >= max_heart_rate * 0.6) & (df["HeartRate"] < max_heart_rate * 0.7),"HeartRate_Zone"] = "Zone_2"
@@ -52,8 +49,26 @@ def add_zones(df):
     return df
 
 def make_Zone_plot(df):
-    fig = px.line(df,)
-#df_activity[..........].mean()
+    fig = px.scatter(df,
+                     x = "time in minutes",
+                     y = "HeartRate",
+                     color = "HeartRate_Zone",
+                     title = "Herzfrequenzzonen über die Zeit")
+    fig.update_traces(mode = "markers + lines") # bestehendes Diagramm wird aktualisiert
+
+    return fig
+
+def zone_statistics(df):
+    stats = df.groupby("HeartRate_Zone").agg(
+    #einmal gruppieren und die Gruppen dann auswerten auf beide gesuchten Arten
+    Zeit_in_Sekunden = ("HeartRate_Zone","count"),
+    Durchschnittliche_Leistung = ("PowerOriginal","mean"))
+
+    stats["Zeit_in_Minuten"] = stats["Zeit_in_Sekunden"]/60
+
+    return stats
+
+
 
 if __name__ == "__main__":
     ekg_df = read_my_csv()
