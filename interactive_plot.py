@@ -9,7 +9,6 @@ from read_pandas import add_zones
 from read_pandas import make_Zone_plot
 from read_pandas import zone_statistics
 
-'''die Streamlit App hat zwei Tabs, diese werden hier definiert'''
 tab1, tab2 = st.tabs(["EKG-Data", "Power-Data"])
 
 with tab1:
