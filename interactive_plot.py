@@ -9,10 +9,7 @@ from read_pandas import add_zones
 from read_pandas import make_Zone_plot
 from read_pandas import zone_statistics
 
-# Wo startet sie Zeitreihe
-# Wo endet sich
-# Was ist die Maximale und Minimale Spannung
-# Grafik
+'''die Streamlit App hat zwei Tabs, diese werden hier definiert'''
 tab1, tab2 = st.tabs(["EKG-Data", "Power-Data"])
 
 with tab1:
@@ -48,7 +45,6 @@ with tab2:
 
     zone_fig = make_Zone_plot(df)
     st.plotly_chart(zone_fig)
-
 
     stats = zone_statistics(df) #hier wird die Statistik erst nochmal berechnet aus der def
     st.write("Zeit und durchschnittiche Leistung pro Zone")
