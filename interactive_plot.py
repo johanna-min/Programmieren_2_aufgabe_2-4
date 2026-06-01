@@ -28,6 +28,7 @@ with tab2:
     st.header("Power-Data")
 
     df = read_activity_csv()
+
     st.write("Mittlere Leistung:")
     st.write(mean_leistung(df))
 
@@ -37,6 +38,7 @@ with tab2:
     fig = make_power_hr_plot(df)
     st.plotly_chart(fig)
 
+
     max_heart_rate = st.number_input("Maximale Herzfrequenz eingeben",
         min_value=100, max_value=250, value=200)
     # Eingabefeld für die max_hr mit Begrenzungen und einem Startwert als erste Angabe
@@ -45,7 +47,6 @@ with tab2:
     #df hat alle Aktivitätsdaten und max_hr kommt aus dem Eingabefeld
 
     zone_fig = make_Zone_plot(df)
-    
     st.plotly_chart(zone_fig)
 
 
