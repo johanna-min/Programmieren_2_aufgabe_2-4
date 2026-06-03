@@ -37,13 +37,17 @@ def make_power_curve(df_power):
     fig = px.line(df_power, x= "time in seconds", y= "best_power")
 
     fig.update_xaxes(type="log")
-    
+    fig.update_layout(
+    xaxis_title="Time [s]",
+    yaxis_title="Power [W]"
+    )
+
     return fig
 
 if __name__ == "__main__":
     df = read_data()
    # window_list = [10, 20, 30, 60, 120, 30, 1200, 3600, 7200]
-    window_list = np.arange(1, 7201)
+    window_list = np.arange(1, len(df)+1)
     df_power = find_all_windows(df, window_list)
     fig = make_power_curve(df_power)
     fig.show()
