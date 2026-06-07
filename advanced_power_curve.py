@@ -57,9 +57,7 @@ def make_power_curve(df_power):
         df_power, 
         x= "time in seconds", 
         y= "best_power", 
-        title="Power Curve",
-        labels={"time in seconds": "Zeit in Sekunden ", "best_power": "Leistung in Watt "}
-    )
+        title="Power Curve",)
 
     tick_values = [1, 2, 5, 10, 30, 60, 120, 300, 600, 1200, 3600, 7200]
     tick_text = ["0:01", "0:02", "0:05", "0:10", "0:30", "1:00", "2:00", 
@@ -68,12 +66,12 @@ def make_power_curve(df_power):
 
     fig.update_xaxes(
         type="log", tickvals=tick_values, ticktext=tick_text,
-        title="Zeit", showgrid=True, gridcolor="lightgray")
+        title="Zeit / Min:Sek", showgrid=True, gridcolor="lightgray")
     # tickvals ist Befehl, wo die Striche auf der x-Achse sein sollen,
     # ticktext ist Befehl, wie die Beschriftung dieser Striche sein soll
 
     fig.update_yaxes(
-        title="Leistung in Watt",showgrid=True, gridcolor="lightgray")
+        title="Leistung / Watt",showgrid=True, gridcolor="lightgray")
 
     fig.update_traces(line=dict(width=3))
 
