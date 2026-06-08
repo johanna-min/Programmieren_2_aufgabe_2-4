@@ -1,6 +1,13 @@
+import numpy as np
+import pandas as pd
+import plotly.express as px
 import streamlit as st
-import read_data
+import read_data 
 from PIL import Image
+
+from advanced_power_curve import find_all_windows
+from advanced_power_curve import make_power_curve
+from advanced_power_curve import read_data_for_power_curve
 
 
 person_dict = read_data.load_person_data()
@@ -25,7 +32,16 @@ with col1:
 with col2:
     st.image(Image.open(picture_path), caption = current_user)
 
+#Implementierung der Power-Curve
 
+df = read_data_for_power_curve()
+power_input = df["PowerOriginal"].to_numpy()
+time_input = df["time in seconds"].to_numpy()
 
+maximal_seconds = int(time_input.max())
+window_list = np.arange(1, maximal_seconds + 1) 
 
-
+df_power = find_all_windows(power_input, time_input, window_list)
+print(df_power[df_power["best_power"].diff() > 0])
+fig = make_power_curve(df_power)
+fig.show()

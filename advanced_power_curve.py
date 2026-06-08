@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 
-def read_data():
+def read_data_for_power_curve():
     df = pd.read_csv("data/activities/activity.csv", sep=",")
     df["time in seconds"] = np.arange(len(df))
     df["time in minutes"] = df["time in seconds"]/60
@@ -73,15 +73,20 @@ def make_power_curve(df_power):
     fig.update_yaxes(
         title="Leistung / Watt",showgrid=True, gridcolor="lightgray")
 
-    fig.update_traces(line=dict(width=3))
+    fig.update_traces(line=dict(width=3, color="blue"))
 
     fig.update_layout(
-        plot_bgcolor="white", paper_bgcolor="white")
+        template="plotly_white",
+        title_x=0.5,
+        plot_bgcolor="white", paper_bgcolor="white",
+        width=1200,
+        height=700
+    )   
     return fig
 
 
 if __name__ == "__main__":
-    df = read_data()
+    df = read_data_for_power_curve()
     power_input = df["PowerOriginal"].to_numpy()
     # das .to_numpy wandelt es in ein reines numpy array um 
     # -> Funktion bekommt nicht gesamtes df, nur mehr die Zahlen daraus (macht es flexibel)
