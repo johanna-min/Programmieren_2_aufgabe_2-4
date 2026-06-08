@@ -18,7 +18,7 @@ st.write("# EKG APP")
 col1, col2 = st.columns(2)
 with col1:
     st.header("Versuchsperson auswählen")
-
+    
     current_user = st.selectbox(
          'Versuchsperson',
          options = person_names, key="sbVersuchsperson")
