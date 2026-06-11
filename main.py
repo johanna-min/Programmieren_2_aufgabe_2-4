@@ -43,7 +43,7 @@ if person:
         
         # Durch alle EKG-Tests der ausgewählten Person gehen
         for t in person.ekg_tests:
-            test_text = "Test ID: " + str(t['id']) + " vom " + t['date']    # Benennt die Optionen die zur Auswahl stehen
+            test_text = t['date']    # Benennt die Optionen die zur Auswahl stehen
             test_Auswahl.append(test_text)
             
         selected_test = st.selectbox("Wähle einen EKG-Test aus:", options=test_Auswahl)     # Auswahlfeld in Streamlit einbauen
