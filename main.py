@@ -39,7 +39,18 @@ if person:
     st.header("EKG Analyse")
 
     if len(person.ekg_tests) > 0:
-        ekg_test = person.ekg_tests[0]
+        test_Auswahl = []
+        
+        # Durch alle EKG-Tests der ausgewählten Person gehen
+        for t in person.ekg_tests:
+            test_text = "Test ID: " + str(t['id']) + " vom " + t['date']    # Benennt die Optionen die zur Auswahl stehen
+            test_Auswahl.append(test_text)
+            
+        selected_test = st.selectbox("Wähle einen EKG-Test aus:", options=test_Auswahl)     # Auswahlfeld in Streamlit einbauen
+
+        test_index = test_Auswahl.index(selected_test)
+        ekg_test = person.ekg_tests[test_index]
+
         ekg = EKGdata(ekg_test)
         threshold = 340
         ekg.find_peaks(threshold)
@@ -49,21 +60,3 @@ if person:
 
     else:
         st.warning("Für diese Person gibt es in der Datenbank keine EKG-Tests.")
-
-'''def main(): --> Testblock
-    selected_person, ekg, fig = analyse_ekg( 
-        person_index=0,
-        ekg_index=0,
-        threshold=340
-    )
-
-    print("Ausgewählte Person:")
-    print(selected_person.get_full_name())
-
-    print("EKG-ID:")
-    print(ekg.id)
-
-    print("Anzahl Peaks:")
-    print(len(ekg.peaks))
-
-    fig.show()'''
