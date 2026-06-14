@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-import read_data 
-from PIL import Image
+#import read_data 
+#from PIL import Image
 from person import get_person_data, get_person_object_by_full_name
 from ekgdata import EKGdata
 
@@ -56,6 +56,7 @@ if person:
         ekg.find_peaks(threshold)
         herzfrequenz = ekg.estimate_hr()
         fig = ekg.plot_time_series()
+        st.write("Die durchschnittliche Herzfrequenz beträgt:", herzfrequenz, "bpm")
         st.plotly_chart(fig)    #, use_container_width=True
 
     else:
